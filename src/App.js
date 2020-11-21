@@ -17,6 +17,7 @@ import Conditional from "./components/conditonal-loading"
 import Todo from "./components/Todo"
 import Api from "./lip/api"
 import Form from "./lip/form"
+import FormExtra from "./lip/FormExtra"
 class App extends Component {
   constructor() {
     super()
@@ -91,6 +92,7 @@ componentDidMount() {
                 <button onClick={this.handleClick}>{buttonText}</button>
                 <h1>{displayText}</h1>
             </div>
+      <FormExtra/>
       {products}
       <Form/>
       <Great />
