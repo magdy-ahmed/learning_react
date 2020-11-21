@@ -18,6 +18,7 @@ import Todo from "./components/Todo"
 import Api from "./lip/api"
 import Form from "./lip/form"
 import FormExtra from "./lip/FormExtra"
+import Hooks from "./lip/hooks";
 class App extends Component {
   constructor() {
     super()
@@ -85,6 +86,7 @@ componentDidMount() {
     return (
 
     <div className="App0">
+<Hooks/>
                   <div>
                 <Conditional isLoading={this.state.isLoading}/>
             </div>
