@@ -6,25 +6,38 @@ import Welcome from './components/Welcome';
 import Footer from './components/Footer'
 import Mainconteant from './components/Mainconteant'
 import Header from './components/Header'
-// import Todo from "./components/Todo"
 import ConatactCard from "./components/ContactCard"
 import Joke from "./components/Joke"
 import Data from "./components/JokeDate"
 import Product from "./components/product";
 import Products from "./components/ProductsData"
-// import TodoData from "./components/TodoData"
 import NewState from "./components/NewState"
 import randomcolor from "randomcolor"
+import Conditional from "./components/conditonal-loading"
+import Todo from "./components/Todo"
+import Api from "./lip/api"
+import Form from "./lip/form"
 class App extends Component {
   constructor() {
     super()
     this.state = {
       count: 0,
-      color: ""
+      color: "",
+      isLoading: true,
+      isLoggedIn: false
+
   }
     this.increment = this.increment.bind(this)
-}
+    this.handleClick = this.handleClick.bind(this)
 
+}
+handleClick() {
+  this.setState(prevState => {
+      return {
+          isLoggedIn: !prevState.isLoggedIn
+      }
+  })
+}
 increment() {
     this.setState(prevState => {
         return {
@@ -52,19 +65,38 @@ increment() {
 //     // console.log("Did Update")
 // }
 // }
+componentDidMount() {
+  setTimeout(() => {
+      this.setState({
+          isLoading: false
+      })
+  }, 1500)
+}
+
   render(){          
     console.log("Render")
-    // const todos = TodoData.map(todo=><Todo key={todo.id} todo={todo} handelchange={this.handelchange}/>)
+    let buttonText = this.state.isLoggedIn ? "LOG OUT" : "LOG IN"
+    let displayText = this.state.isLoggedIn ? "Logged in" : "Logged out"
+
     const products = Products.map(product=><Product Key={product.id} product={product}/>)
     const datajoke = Data.map(joke=><Joke question={joke.question} answer={joke.answer}/>)
     
     return (
+
     <div className="App0">
+                  <div>
+                <Conditional isLoading={this.state.isLoading}/>
+            </div>
+            <div>
+                <button onClick={this.handleClick}>{buttonText}</button>
+                <h1>{displayText}</h1>
+            </div>
       {products}
+      <Form/>
       <Great />
       <Welcome/>
- 
-      {/* {todos} */}
+      <Api/>
+<Todo/>
       {datajoke}
       <Joke
           answer="i dont know"

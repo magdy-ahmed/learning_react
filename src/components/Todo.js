@@ -1,43 +1,57 @@
-import React ,{Component}from "react"
+/**
+ * Let's make it so our checkbox can actually mark our todo as complete or incomplete!
+ * This challenge is a little more involved than some of the past ones. Check the comments 
+ * in the code for some help on accomplishing this one
+ * 
+ * Challenge: 
+ * 1. Create an event handler in the App component for when the checkbox is clicked (which is an `onChange` event)
+ *    a. This method will be the trickest part. Check the comments in the stubbed-out method below for some pseudocode to help guide you through this part
+ * 2. Pass the method down to the TodoItem component
+ * 3. In the TodoItem component, make it so when the `onChange` event happens, it calls the `handleChange` method and passes the id of the todo into the function
+ */
 
-import TodoData from "./TodoData"
-class Todo extends Component{
-constructor(props){
-    super()
-    
-    this.state={todo:props.todo
-    }
-    console.log(this.state.todo)
-    this.handelchange= this.handelchange.bind(this)
-}
+import React from "react"
+import TodoItem from "./TodoItem"
+import todosData from "./TodoData"
 
-handelchange(id,props){
-console.log("message",id)
-this.setState  (prevState=>{
-    const updateTodo = prevState.todo.map(todos=>{
-        if (todos.id === id){
-            todos.check = !todos.check
+class Todo extends React.Component {
+    constructor() {
+        super()
+        this.state = {
+            todos: todosData
         }
-    return todos
-    })
+        this.handleChange = this.handleChange.bind(this)
+    }
     
-    return {todo: updateTodo}
-})}
-render(){
+    handleChange(id) {
+       
+            const updatedTodos = this.state.todos.map(todo => {
+                
+                if (todo.id === id) {
+                    
+        
+                        todo.check = !todo.check    
+                    
+                    // todo.check = !todo.check
+                }
+                console.log(todo)
+                return todo
+            })
+            this.setState({
+                todos:updatedTodos
+            })
+            
+        
+    }
     
-return(
-
+    render() {
+        const todoItems = this.state.todos.map(item => <TodoItem key={item.id} item={item} handleChange={this.handleChange}/>)
+        return(
 <div>
-<h1>{this.state.todo.check}</h1>
-    <input
-    // checked={this.state.todo.checked}
-     type="checkbox" 
-     onChange ={()=>this.handelchange(this.state.todo.id,this.props)}
-     />
-<p>{this.state.todo.name}</p>
-
-</div>)
-
+{todoItems}
+</div>
+        )    
+    }
 }
-}
+
 export default Todo
